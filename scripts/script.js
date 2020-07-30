@@ -3,21 +3,25 @@
 // mystatus.textContent = "\u2705"; --> checkmark
 // mystatus.textContent = "\u274C"; --> x mark
 
+// Global variables
+var startButton = document.getElementById('start-button')
+var showIfCorrect = document.querySelector(".show-if-correct");
+var randomNum = 0;
+var randomPick;
+var answers = document.querySelector(".answers");
+
 var questions = [
     {   askQuestion: "How many Hawaiian Islands are there total?", 
         answers: [{answer: "137", correct: 1}, {answer: "8", correct: 0}, {answer: "53", correct: 0}, {answer: "94", correct: 0}],
     },
     {   askQuestion: "Which of one of these is not a style of Martial Art?", 
-        answers: [{answer: "JiuJitsu", correct: 0}, {answer: "Eskrima", correct: 0}, {answer: "CQC", correct: 0}, {answer: "Aikido", correct: 0}],
+        answers: [{answer: "JiuJitsu", correct: 0}, {answer: "Eskrima", correct: 0}, {answer: "CQC", correct: 1}, {answer: "Aikido", correct: 0}],
     },
     {   askQuestion: "Is the logical expression (4 > 7) || (5 > 2) true or false?", 
         answers: [{answer: true, correct: 1}, {answer: false, correct: 0}]
-    }
-    
+    }   
 ]
-
 // Start the trivia
-var startButton = document.getElementById('start-button')
 startButton.addEventListener("click", function() {
     var mainDisplay = document.getElementById("main-display");
     mainDisplay.style.display = "none";
@@ -25,20 +29,24 @@ startButton.addEventListener("click", function() {
     generateQuestion();
 });
 
-var randomNum = 0;
-function generateQuestion() {
 
-    console.log("before splice");
-    questions.forEach(element => console.log(element));
-    
+function generateQuestion() {
+    if (questions.length < 1) {
+        displayResults();
+        return;
+    } 
     // Pick a question at random
     randomNum = Math.floor(Math.random() * questions.length);
-    var randomPick = questions[randomNum];
+    randomPick = questions[randomNum];
     // Set the question
     document.getElementById('ask-question').textContent = randomPick.askQuestion;
 
     // list the answers
     var answer = document.querySelectorAll(".answer");
+
+    // ensure all answer elements displays are show.
+    answer.forEach(element => element.style.display="block");
+
     for (var i = 0; i < randomPick.answers.length; i++) {
         answer[i].textContent = randomPick.answers[i].answer;
 
@@ -53,6 +61,36 @@ function generateQuestion() {
     questions.splice(randomNum, 1);
 }
 
+// When a question is picked, let the user now whether question is correct 
+// and generate a new questions
+answers.addEventListener("click", function(event) {
+    // if true, don't display
+    if (questions.length < 1) {
+        console.log("Done!");
+        return;
+    } 
+    var element = event.target;
+    // console.log(element);
+    // console.log(randomPick);
+    // Check if answer is correct
+    var elementIndex =  element.getAttribute("data-index")
+
+    var showIfCorrect = document.querySelector(".show-if-correct");
+    showIfCorrect.classList.add("border-top");
+    // Check if answer is correct
+    if (randomPick.answers[elementIndex].correct === 1) {
+        showIfCorrect.textContent = "Correct!";
+    } else {
+        showIfCorrect.textContent = "Incorrect";
+    }
+    
+    setInterval(function() {
+        showIfCorrect.textContent = "";
+        showIfCorrect.classList.remove("border-top");
+    }, 2000);
+
+    generateQuestion();
+})
 
 function countDown() {
     var quizTime = document.getElementById("quiz-time");
@@ -69,4 +107,9 @@ function countDown() {
         }
 
     }, 1000)
+}
+
+// TODO: work on this function to display results to user
+function displayResults() {
+    console.log("Done!");
 }
