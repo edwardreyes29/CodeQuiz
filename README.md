@@ -1,16 +1,58 @@
-# 04 Web APIs: Code Quiz
+# Edward Reyes: Code Quiz
+Due date: 08/02/2020
 
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment, which is typically a combination of multiple-choice questions and interactive challenges. Build a timed code quiz with multiple-choice questions. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.
 
-## User Story
+## The game
 
 ```
-AS A coding bootcamp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
+As part of my assignment, I've created a Quiz Trivia game that asks players 20 random questions of various subjects. The user is asked either multiple choice questions or true or false questions. The user also only has 120 seconds to complete the quiz. The game will end when either all questions have been answered or when the time as run out. Also, there is a 10 second minus penalty for each wrong answer.
 ```
 
-## Acceptance Criteria
+### Starting page
+```
+The current highsest score is displayed the top left, to motivate user's to try and top that score. But more importantly, the game retrieves the highest score by sorting the array of user scores in descending order using a merger sort. Then it retrieves the first element which will be the highest score saved.
+
+The game is ready to play when the use clicks the "Start Quiz" button.
+```
+![Start Page](assets/images/start-page.png)
+### When the game starts
+
+```
+The game saves it's questions as object in the script.js file. and dynamically renders them on the page by targeting certain divs to display the contents of the questions. I thought it would be easier to do this rather than creating separate elements on the HTML DOM separately, that way, I can always add new questions without ever having to edit the html file.
+
+The questions are picked at random. So each playthrough will display the same 20 questions at different orders. 
+```
+
+![Questions](assets/images/questions-example-2.png)
+### When game is finished
+![Game-finished-1](assets/images/quiz-complete-1.png)
+### input validation
+```
+Using Bootstraps is-valid and is-invalid classes, the code will reveal red borders and a message when user's attempt to enter an empty string.
+```
+![Game-finished-2](assets/images/quiz-complete-input-validation.png)
+
+### Scoreboard
+```
+Here the user has the option to enter their initials. The highest score will not be updated until the user decides to enter their initials, therefore saving their score and displaying it if it is greater than the highest score. This page also displays the user's current score.
+```
+![Scoreboard-1](assets/images/scoreboard-1.png)
+```
+Players can choose to retake the quiz, which will send them back to the start of the game (basicially reloading the page to start the game over) and they also have the option to clear the scoreboard, which will remove the scores from the game as well as any saved scores and initials in the localStorage.
+```
+![Scoreboard-2](assets/images/retake-buttons.png)
+![Scoreboard-2](assets/images/cleared-screen.png)
+
+### Responsive pages
+```
+The page is also responsive, thanks to the capabilities of bootstrap.
+```
+![Responsive-1](assets/images/start-page-responsive.png)
+![Responsive-2](assets/images/questions-example-1.png)
+![Responsive-3](assets/images/scorboard-2-responsive.png)
+
+
+
 
 ```
 GIVEN I am taking a code quiz
@@ -25,18 +67,3 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and score
 ```
-
-The following animation demonstrates the application functionality:
-
-![code quiz](./Assets/04-web-apis-homework-demo.gif)
-
-### Review
-
-You are required to submit the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.

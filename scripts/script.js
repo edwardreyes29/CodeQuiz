@@ -177,7 +177,6 @@ var initialSubmit = document.getElementById("initial-submit");
 initialSubmit.addEventListener("click", function() {
     event.preventDefault();
     var enteredInitials = document.getElementById("enterInitials").value.trim();
-    console.log(enteredInitials);
 
     // Make sure enteredInitials is not an empty string
     if (enteredInitials.length === 0) {
@@ -231,6 +230,13 @@ function showHighScores() {
     }
 }
 
+// Clear score board and scores from local storage
+var clearHighScoresButton = document.getElementById("clear-high-scores");
+clearHighScoresButton.addEventListener("click", function() {
+    localStorage.clear();
+    document.getElementById("scoreboard").innerHTML = "";
+})
+
 // Merge sort:
 // reference: https://medium.com/javascript-in-plain-english/javascript-merge-sort-3205891ac060
 function mergeSort(arr) {
@@ -272,11 +278,3 @@ function merge(left, right) {
         .concat(right.slice(rightIndex));
 }
 
-// TODO: add functions to go back and play again( will require to reset scores)
-var clearHighScoresButton = document.getElementById("clear-high-scores");
-
-// Clear score board and scores from local storage
-clearHighScoresButton.addEventListener("click", function() {
-    localStorage.clear();
-    document.getElementById("scoreboard").innerHTML = "";
-})
