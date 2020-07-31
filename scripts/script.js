@@ -5,6 +5,7 @@ var score = 0;      // Keeps track of players score
 var secondsLeft = 120;   // Time set for quiz
 var timerInterval;  // to control the timer
 var quizTakers = [];    // to store quiz takers objects
+
 // Sort high scores to highest to lowest
 var sortedArray;
 
@@ -45,8 +46,6 @@ var questions = [
     {   askQuestion: "1, 1, 2, 3, 5, 8, 13, ___", 
         answers: [{answer: "34", correct: 0}, {answer: "17", correct: 0}, {answer: "21", correct: 1}, {answer: "55", correct: 0}],
     },
-
-
 ];
 
 // Start the trivia
@@ -68,6 +67,7 @@ function generateQuestion() {
     // Pick a question at random
     randomNum = Math.floor(Math.random() * questions.length);
     randomPick = questions[randomNum];
+
     // Set the question
     document.getElementById('ask-question').textContent = randomPick.askQuestion;
 
@@ -86,12 +86,10 @@ function generateQuestion() {
                 answer[k].style.display = "none";
             }
         }
-    } // end for loop
-     // remove question from question array
-    
+    }
 }
 
-// When a question is picked, let the user now whether question is correct 
+// When a question is picked, let the user know whether question is correct 
 // and generate a new questions
 var answers = document.querySelector(".answers");
 answers.addEventListener("click", function(event) {
@@ -251,6 +249,7 @@ function mergeSort(arr) {
 }
 
 // Merge two arrays: left and right
+// reference: https://medium.com/javascript-in-plain-english/javascript-merge-sort-3205891ac060
 function merge(left, right) {
     let resultArray = [], leftIndex = 0, rightIndex = 0;
 
