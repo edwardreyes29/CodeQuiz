@@ -25,7 +25,7 @@
             <button id="start-button" type="button" class="btn btn-primary">Start Quiz</button>
         </div>
         <div id="questions-display" class="container quiz-area align-items-center p-5" style="height:100vh">
-            <h2 id="ask-question"class="text-center">
+            <h2 id="ask-question" class="text-center">
                 Question title here
             </h2>
             <ul class="answers list-group">
@@ -39,8 +39,18 @@
         </div>
 
         <div id="results-display" class="container quiz-area align-items-center p-5" style="height:100vh">
-            <h2 id="ask-question"class="text-center">All done!</h2>
+            <h2>All done!</h2>
             <p id="display-score"></p>
+            <form>
+                <div class="form-group">
+                    <label for="enterInitials">Enter Initials</label>
+                    <input class="form-control" id="enterInitials" placeholder="Enter initials">
+                    <div class="invalid-feedback">
+                        Please provide initials
+                    </div>
+                </div>
+                <button type="submit" id="initial-submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
 
     </main>

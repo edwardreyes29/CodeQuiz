@@ -6,12 +6,14 @@
 // Global variables
 var startButton = document.getElementById('start-button')
 var showIfCorrect = document.querySelector(".show-if-correct");
+var initialSubmit = document.getElementById("initial-submit");
 var randomNum = 0;
 var randomPick;
 var answers = document.querySelector(".answers");
 var score = 0;
 var secondsLeft = 75;
 var timerInterval;
+var showIfCorrect
 
 var questions = [
     {   askQuestion: "How many Hawaiian Islands are there total?", 
@@ -27,6 +29,7 @@ var questions = [
 
 // Start the trivia
 startButton.addEventListener("click", function() {
+    event.preventDefault();
     document.getElementById("start-display").style.display = "none";
     document.getElementById("questions-display").style.display = "block";
     countDown();
@@ -68,6 +71,7 @@ function generateQuestion() {
 // When a question is picked, let the user now whether question is correct 
 // and generate a new questions
 answers.addEventListener("click", function(event) {
+    event.preventDefault();
    // If there are no more questions, stop quiz
     
     var element = event.target;
@@ -75,26 +79,26 @@ answers.addEventListener("click", function(event) {
     // Check if answer is correct
     var elementIndex =  element.getAttribute("data-index")
 
-    var showIfCorrect = document.querySelector(".show-if-correct");
-    showIfCorrect.classList.add("border-top");
+    // showIfCorrect = document.querySelector(".show-if-correct");
+    // showIfCorrect.classList.add("border-top");
+
     // Check if answer is correct
-    console.log(randomPick.answers[elementIndex])
     if (randomPick.answers[elementIndex].correct === 1) {
-        showIfCorrect.textContent = "Correct!";
-        console.log("correct")
+        // showIfCorrect.textContent = "Correct!";
+        showCorrect()
         score += 10;
     } else {
-        showIfCorrect.textContent = "Incorrect";
+        // showIfCorrect.textContent = "Incorrect";
+        showIncorrect()
         secondsLeft -= 10;
     }
     
-    setInterval(function() {
-        showIfCorrect.textContent = "";
-        showIfCorrect.classList.remove("border-top");
-    }, 2000);
+    // setInterval(function() {
+    //     showIfCorrect.textContent = "";
+    //     showIfCorrect.classList.remove("border-top");
+    // }, 2000);
 
     questions.splice(randomNum, 1);
-    console.log(questions.length)
     if (questions.length === 0) {
         stopTimer()
         stopQuiz();
@@ -119,6 +123,30 @@ function countDown() {
     }, 1000)
 }
 
+// Displays "Correct!" if the user gets the right answer
+function showCorrect() {
+    showIfCorrect = document.querySelector(".show-if-correct");
+    showIfCorrect.classList.add("border-top");
+    showIfCorrect.textContent = "Correct!";
+
+    setInterval(function() {
+        showIfCorrect.textContent = "";
+        showIfCorrect.classList.remove("border-top");
+    }, 2000);
+}
+
+// Displays "Incorrect!" if the user gets the wrong answer
+function showIncorrect() {
+    showIfCorrect = document.querySelector(".show-if-correct");
+    showIfCorrect.classList.add("border-top");
+    showIfCorrect.textContent = "Incorrect";
+
+    setInterval(function() {
+        showIfCorrect.textContent = "";
+        showIfCorrect.classList.remove("border-top");
+    }, 2000);
+}
+
 // Stop timer
 function stopTimer() {
     clearInterval(timerInterval);
@@ -128,10 +156,20 @@ function stopQuiz() {
     document.getElementById("questions-display").style.display = "none";
     document.getElementById("results-display").style.display = "block";
     document.getElementById("display-score").innerHTML = "Your final score is " + score;
-
 }
 
-// TODO: work on this function to display results to user
-function displayResults() {
-    console.log("Done!");
-}
+// Add event listener to initial-submit
+initialSubmit.addEventListener("click", function() {
+    event.preventDefault();
+    var enteredInitials = document.getElementById("enterInitials").value.trim();
+    console.log(enteredInitials);
+    // Make sure enteredInitials is not an empty string
+    if (enteredInitials.length === 0) {
+        console.log(true);
+        document.getElementById("enterInitials").classList.add("is-invalid");
+        return;
+    }
+    document.getElementById("enterInitials").classList.remove("is-invalid");
+    document.getElementById("enterInitials").classList.add("is-valid");
+
+})
