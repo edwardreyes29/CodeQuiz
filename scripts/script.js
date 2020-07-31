@@ -9,8 +9,9 @@ var showIfCorrect = document.querySelector(".show-if-correct");
 var randomNum = 0;
 var randomPick;
 var answers = document.querySelector(".answers");
-var timesUp = false;
-var finishedQuestions = false;
+var score = 0;
+var secondsLeft = 75;
+var timerInterval;
 
 var questions = [
     {   askQuestion: "How many Hawaiian Islands are there total?", 
@@ -22,7 +23,8 @@ var questions = [
     {   askQuestion: "Is the logical expression (4 > 7) || (5 > 2) true or false?", 
         answers: [{answer: true, correct: 1}, {answer: false, correct: 0}]
     }   
-]
+];
+
 // Start the trivia
 startButton.addEventListener("click", function() {
     document.getElementById("start-display").style.display = "none";
@@ -67,14 +69,14 @@ function generateQuestion() {
 // When a question is picked, let the user now whether question is correct 
 // and generate a new questions
 answers.addEventListener("click", function(event) {
-    // if true, don't display
+   // If there are no more questions, stop quiz
     if (questions.length < 1) {
-        console.log("Done!");
+        stopTimer()
+        stopQuiz();
         return;
     } 
     var element = event.target;
-    // console.log(element);
-    // console.log(randomPick);
+
     // Check if answer is correct
     var elementIndex =  element.getAttribute("data-index")
 
@@ -83,8 +85,10 @@ answers.addEventListener("click", function(event) {
     // Check if answer is correct
     if (randomPick.answers[elementIndex].correct === 1) {
         showIfCorrect.textContent = "Correct!";
+        score += 10;
     } else {
         showIfCorrect.textContent = "Incorrect";
+        secondsLeft -= 10;
     }
     
     setInterval(function() {
@@ -97,21 +101,29 @@ answers.addEventListener("click", function(event) {
 
 function countDown() {
     var quizTime = document.getElementById("quiz-time");
-    
-    var secondsLeft = 75;
 
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         secondsLeft--;
         quizTime.textContent = "Time: " + secondsLeft;
 
-        if(secondsLeft === 0) {
+        if(secondsLeft === 0 || questions.length < 0) {
             clearInterval(timerInterval);
-            alert("Times up!");
-            timesUp = true;
-            console.log(timesUp);
+            // If seconds is 0, stop quiz
+            stopQuiz();
         }
-
     }, 1000)
+}
+
+// Stop timer
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function stopQuiz() {
+    document.getElementById("questions-display").style.display = "none";
+    document.getElementById("results-display").style.display = "block";
+    document.getElementById("display-score").innerHTML = "Your final score is " + 22;
+
 }
 
 // TODO: work on this function to display results to user
