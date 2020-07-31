@@ -2,12 +2,21 @@
 var randomNum = 0;  // To store a randomly generated number
 var randomPick;     // To store a randomly chosen question from questions array  
 var score = 0;      // Keeps track of players score
-var secondsLeft = 75;   // Time set for quiz
+var secondsLeft = 120;   // Time set for quiz
 var timerInterval;  // to control the timer
 var quizTakers = [];    // to store quiz takers objects
+// Sort high scores to highest to lowest
+var sortedArray;
 
 // Initialize quizTakers array with store quizTakers scores and initials
 initQuizTakers();
+
+// Display high score
+function showHighest() {
+    sortedArray = mergeSort(quizTakers);
+    document.getElementById("show-highest").textContent = "High Score: " + sortedArray[0].score;
+}
+showHighest();
 
 // These are the questions to be randomly chosen and displayed
 // TODO: Add 15 questions
@@ -19,8 +28,25 @@ var questions = [
         answers: [{answer: "JiuJitsu", correct: 0}, {answer: "Eskrima", correct: 0}, {answer: "CQC", correct: 1}, {answer: "Aikido", correct: 0}],
     },
     {   askQuestion: "Is the logical expression (4 > 7) || (5 > 2) true or false?", 
-        answers: [{answer: true, correct: 1}, {answer: false, correct: 0}]
-    }   
+        answers: [{answer: true, correct: 1}, {answer: false, correct: 0}],
+    },
+    {   askQuestion: "What is the earliest century the guitar instrument can be traced?", 
+        answers: [{answer: "16th Century", correct: 0}, {answer: "17th Century", correct: 0}, {answer: "18th Century", correct: 0}, {answer: "15th Century", correct: 1}],
+    },
+    {   askQuestion: "If A = True and B = True, then (A && B) && (!A || !B) is?", 
+        answers: [{answer: true, correct: 0}, {answer: false, correct: 1}],
+    }, 
+    {   askQuestion: "How many teeth does a typical adult human have?", 
+        answers: [{answer: "28", correct: 0}, {answer: "32", correct: 1}, {answer: "37", correct: 0}, {answer: "22", correct: 0}],
+    },
+    {   askQuestion: "Penicillin was first discovered in what year?", 
+        answers: [{answer: "1928", correct: 1}, {answer: "1895", correct: 0}, {answer: "1904", correct: 0}, {answer: "1955", correct: 0}],
+    },
+    {   askQuestion: "1, 1, 2, 3, 5, 8, 13, ___", 
+        answers: [{answer: "34", correct: 0}, {answer: "17", correct: 0}, {answer: "21", correct: 1}, {answer: "55", correct: 0}],
+    },
+
+
 ];
 
 // Start the trivia
@@ -187,13 +213,12 @@ function initQuizTakers() {
 }
 
 function showHighScores() {
+    showHighest();
     document.getElementById("results-display").style.display = "none";
     document.getElementById("high-scores-display").style.display = "block";
 
-    // Sort high scores to highest to lowest
-    var sortedArray = mergeSort(quizTakers);
-    
     // Display results in score board.
+    sortedArray = mergeSort(quizTakers);
     for (var i = 0; i < sortedArray.length; i++) {
         var quizTaker = sortedArray[i];
         var li = document.createElement("li");
