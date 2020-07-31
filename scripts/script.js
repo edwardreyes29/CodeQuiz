@@ -194,15 +194,11 @@ function storeQuizTakers() {
 
 function init() {
     var storedQuizTakers = JSON.parse(localStorage.getItem("quizTakers"));
-    // Write code here to check if there are todos in localStorage
-    // If so, parse the value from localStorage and assign it to the todos variable
     if (storedQuizTakers !== null) {
         for(var i = 0; i < storedQuizTakers.length; i++) {
             quizTakers.push(storedQuizTakers[i]);
         } 
     }   
-    // Render todos to the DOM
-    // renderQuizTakers();
 }
 
 function showHighScores() {
@@ -211,7 +207,21 @@ function showHighScores() {
 
     // Sort high scores to highest to lowest
     var sortedArray = mergeSort(quizTakers);
-    sortedArray.forEach(element => console.log(element.score));
+    
+    // Display results in score board.
+    // Render a new li for each todo
+    // <li class="quiz-taker list-group-item list-group-item-action btn" data-index=0>quiz-taker 1</li>
+    for (var i = 0; i < sortedArray.length; i++) {
+        var quizTaker = sortedArray[i];
+
+        var li = document.createElement("li");
+        li.textContent = (i + 1) + ". " + quizTaker.initials + " - " + quizTaker.score;
+        li.classList.add("quiz-taker");
+        li.classList.add("list-group-item");
+        li.classList.add("list-group-item-action");
+        li.classList.add("btn")
+        document.getElementById("scoreboard").appendChild(li);
+    }
 }
 
 // Merge sort:
