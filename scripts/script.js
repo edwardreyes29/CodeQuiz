@@ -48,6 +48,42 @@ var questions = [
     {   askQuestion: "1, 1, 2, 3, 5, 8, 13, ___", 
         answers: [{answer: "34", correct: 0}, {answer: "17", correct: 0}, {answer: "21", correct: 1}, {answer: "55", correct: 0}],
     },
+    {   askQuestion: "API stands for ___", 
+        answers: [{answer: "Apples Pears and Ice cream", correct: 0}, {answer: "Application partial inter-web", correct: 0}, {answer: "Appliances Plumbing Incorporated", correct: 0}, {answer: "Application programming interface", correct: 1}],
+    },
+    {   askQuestion: "Which binary code represents the decimal 5?", 
+        answers: [{answer: "0101", correct: 1}, {answer: "1101", correct: 0}, {answer: "0111", correct: 0}, {answer: "0010", correct: 0}],
+    },
+    {   askQuestion: "Sharks are considered to by part of which class of marine animals?", 
+        answers: [{answer: "Cnidaria", correct: 0}, {answer: "Chondrichthyes", correct: 1}, {answer: "Osteichthyes", correct: 0}, {answer: "Tetrapoda", correct: 0}],
+    },  
+    {   askQuestion: "How many moons does Saturn have?", 
+        answers: [{answer: "82", correct: 1}, {answer: "62", correct: 0}, {answer: "150", correct: 0}, {answer: "53", correct: 0}],
+    }, 
+    {   askQuestion: "Tanya is older than Eric. Cliff is older than Tanya. Therefore, Eric is older than Cliff.", 
+        answers: [{answer: true, correct: 0}, {answer: false, correct: 1}],
+    }, 
+    {   askQuestion: "Blueberries cost more than strawberries. Blueberries cost less than raspberries. Raspberries cost more that strawberries and blueberries.", 
+        answers: [{answer: true, correct: 1}, {answer: false, correct: 0}],
+    },
+    {   askQuestion: "The Roman Empire lasted for how many years before it came to an end?", 
+        answers: [{answer: "800 years", correct: 0}, {answer: "220 years", correct: 0}, {answer: "1480 years", correct: 1}, {answer: "2000 years", correct: 0}],
+    },
+    {   askQuestion: "Who was the Greek God or Goddess that created the olive tree to win a contest to become the protector of a newly built city?", 
+        answers: [{answer: "Poseidon", correct: 0}, {answer: "Athena", correct: 1}, {answer: "Ares", correct: 0}, {answer: "Demeter", correct: 0}],
+    },
+    {   askQuestion: "All the trees in the park are flowering trees. Some of the trees in the park are dogwoods. All dogwoods in the park are flowering trees.", 
+        answers: [{answer: true, correct: 1}, {answer: false, correct: 0}],
+    },
+    {   askQuestion: "Mara runs faster than Gail. Lily runs faster than Mara. Gail runs faster than Lily.", 
+        answers: [{answer: true, correct: 0}, {answer: false, correct: 1}],
+    },
+    {   askQuestion: "How many fleet of ships did the famous Spanish Armada have in 1588?", 
+        answers: [{answer: "80 ships", correct: 0}, {answer: "65 ships", correct: 0}, {answer: "260 ships", correct: 0}, {answer: "130 ships", correct: 1}],
+    },
+    {   askQuestion: "Which year did the Sgt. Pepper's Lonely Hearts Club Band album by The Beatles released?", 
+        answers: [{answer: "1967", correct: 1}, {answer: "1969", correct: 0}, {answer: "1972", correct: 0}, {answer: "1970", correct: 0}],
+    },
 ];
 
 // Start the trivia
@@ -108,7 +144,15 @@ answers.addEventListener("click", function(event) {
         score += 10;
     } else {
         showIncorrect()
-        secondsLeft -= 10;
+        if(secondsLeft > 10) {
+            secondsLeft -= 10;
+        } else {
+            secondsLeft = 0;
+            document.getElementById("quiz-time").textContent = "Time: " + secondsLeft;
+            stopTimer()
+            stopQuiz();
+            
+        }
     }
 
     questions.splice(randomNum, 1);
