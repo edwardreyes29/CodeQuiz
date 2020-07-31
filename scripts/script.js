@@ -13,7 +13,11 @@ var answers = document.querySelector(".answers");
 var score = 0;
 var secondsLeft = 75;
 var timerInterval;
-var showIfCorrect
+var showIfCorrect;
+var quizTakers = [];
+
+// Initialize quizTakers array with store quizTakers scores and initials
+init();
 
 var questions = [
     {   askQuestion: "How many Hawaiian Islands are there total?", 
@@ -163,6 +167,7 @@ initialSubmit.addEventListener("click", function() {
     event.preventDefault();
     var enteredInitials = document.getElementById("enterInitials").value.trim();
     console.log(enteredInitials);
+
     // Make sure enteredInitials is not an empty string
     if (enteredInitials.length === 0) {
         console.log(true);
@@ -172,4 +177,29 @@ initialSubmit.addEventListener("click", function() {
     document.getElementById("enterInitials").classList.remove("is-invalid");
     document.getElementById("enterInitials").classList.add("is-valid");
 
+    // Create a player object to store initials and score
+    var quizTakerObj = {
+        initials: enteredInitials,
+        score: score  
+    };
+    quizTakers.push(quizTakerObj);
+    storeQuizTakers();
 })
+
+function storeQuizTakers() {
+    // Add code here to stringify the todos array and save it to the "todos" key in localStorage
+    localStorage.setItem("quizTakers", JSON.stringify(quizTakers))
+}
+
+function init() {
+    var storedQuizTakers = JSON.parse(localStorage.getItem("quizTakers"));
+    // Write code here to check if there are todos in localStorage
+    // If so, parse the value from localStorage and assign it to the todos variable
+    if (storedQuizTakers !== null) {
+        for(var i = 0; i < storedQuizTakers.length; i++) {
+            quizTakers.push(storedQuizTakers[i]);
+        } 
+    }   
+    // Render todos to the DOM
+    // renderQuizTakers();
+}
