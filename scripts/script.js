@@ -9,6 +9,8 @@ var showIfCorrect = document.querySelector(".show-if-correct");
 var randomNum = 0;
 var randomPick;
 var answers = document.querySelector(".answers");
+var timesUp = false;
+var finishedQuestions = false;
 
 var questions = [
     {   askQuestion: "How many Hawaiian Islands are there total?", 
@@ -23,8 +25,9 @@ var questions = [
 ]
 // Start the trivia
 startButton.addEventListener("click", function() {
-    var mainDisplay = document.getElementById("main-display");
-    mainDisplay.style.display = "none";
+    document.getElementById("start-display").style.display = "none";
+    document.getElementById("questions-display").style.display = "block";
+    
     countDown();
     generateQuestion();
 });
@@ -104,6 +107,8 @@ function countDown() {
         if(secondsLeft === 0) {
             clearInterval(timerInterval);
             alert("Times up!");
+            timesUp = true;
+            console.log(timesUp);
         }
 
     }, 1000)

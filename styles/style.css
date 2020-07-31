@@ -1,10 +1,11 @@
-/* #main-display {
-    display: none;
-} */
-
-.quiz-area {
-    padding: 50px;
+#start-display {
+    display: block;
 }
-/* .quiz-answer {
-    min-width: 200px;
-} */
+
+#questions-display {
+    display: none;
+}
+
+#results-display {
+    display: none;
+}

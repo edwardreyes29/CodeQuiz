@@ -17,14 +17,28 @@
             <div class="mr-auto">High Score:</div>
             <div id="quiz-time">Time: 75</div>
         </div>
-        <div id="main-display" class="quiz-area container text-center align-items-center" style="height:100vh;">
+        <div id="start-display" class="quiz-area container text-center align-items-center p-5" style="height:100vh;">
             <h1>Random Trivia</h1>
             <p>Try to answer the following questions within the time lime.<br>
                 Keep in mind that incorrect answers will penalize your score time by 5 seconds!
             </p>
             <button id="start-button" type="button" class="btn btn-primary">Start Quiz</button>
         </div>
-        <div id="question-div" class="container quiz-area align-items-center" style="height:100vh">
+        <div id="questions-display" class="container quiz-area align-items-center p-5" style="height:100vh">
+            <h2 id="ask-question"class="text-center">
+                Question title here
+            </h2>
+            <ul class="answers list-group">
+                <li class="answer list-group-item list-group-item-action btn" data-index=0>question 1</li>
+                <li class="answer list-group-item list-group-item-action btn" data-index=1>question 2</li>
+                <li class="answer list-group-item list-group-item-action btn" data-index=2>question 3</li>
+                <li class="answer list-group-item list-group-item-action btn" data-index=3>question 4</li>
+            </ul>
+            <!-- <button type="button" class="btn btn-primary">1</button> -->
+            <p class="show-if-correct text-secondary mt-3"></p>
+        </div>
+
+        <div id="results-display" class="container quiz-area align-items-center p-5" style="height:100vh">
             <h2 id="ask-question"class="text-center">
                 Question title here
             </h2>
