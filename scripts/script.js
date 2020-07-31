@@ -272,4 +272,11 @@ function merge(left, right) {
         .concat(right.slice(rightIndex));
 }
 
-// TODO: add functions to go back, clear scores, and play again( will require to reset scores)
+// TODO: add functions to go back and play again( will require to reset scores)
+var clearHighScoresButton = document.getElementById("clear-high-scores");
+
+// Clear score board and scores from local storage
+clearHighScoresButton.addEventListener("click", function() {
+    localStorage.clear();
+    document.getElementById("scoreboard").innerHTML = "";
+})
