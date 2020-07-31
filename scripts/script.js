@@ -29,14 +29,13 @@ var questions = [
 startButton.addEventListener("click", function() {
     document.getElementById("start-display").style.display = "none";
     document.getElementById("questions-display").style.display = "block";
-    
     countDown();
     generateQuestion();
 });
 
 
 function generateQuestion() {
-    if (questions.length < 1) {
+    if (questions.length === 0) {
         displayResults();
         return;
     } 
@@ -63,18 +62,14 @@ function generateQuestion() {
         }
     } // end for loop
      // remove question from question array
-    questions.splice(randomNum, 1);
+    
 }
 
 // When a question is picked, let the user now whether question is correct 
 // and generate a new questions
 answers.addEventListener("click", function(event) {
    // If there are no more questions, stop quiz
-    if (questions.length < 1) {
-        stopTimer()
-        stopQuiz();
-        return;
-    } 
+    
     var element = event.target;
 
     // Check if answer is correct
@@ -83,8 +78,10 @@ answers.addEventListener("click", function(event) {
     var showIfCorrect = document.querySelector(".show-if-correct");
     showIfCorrect.classList.add("border-top");
     // Check if answer is correct
+    console.log(randomPick.answers[elementIndex])
     if (randomPick.answers[elementIndex].correct === 1) {
         showIfCorrect.textContent = "Correct!";
+        console.log("correct")
         score += 10;
     } else {
         showIfCorrect.textContent = "Incorrect";
@@ -95,6 +92,14 @@ answers.addEventListener("click", function(event) {
         showIfCorrect.textContent = "";
         showIfCorrect.classList.remove("border-top");
     }, 2000);
+
+    questions.splice(randomNum, 1);
+    console.log(questions.length)
+    if (questions.length === 0) {
+        stopTimer()
+        stopQuiz();
+        return;
+    } 
 
     generateQuestion();
 })
@@ -122,7 +127,7 @@ function stopTimer() {
 function stopQuiz() {
     document.getElementById("questions-display").style.display = "none";
     document.getElementById("results-display").style.display = "block";
-    document.getElementById("display-score").innerHTML = "Your final score is " + 22;
+    document.getElementById("display-score").innerHTML = "Your final score is " + score;
 
 }
 
