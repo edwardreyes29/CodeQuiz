@@ -1,24 +1,16 @@
-// var mystatus = document.querySelector("#mystatus");
-// console.log(mystatus);
-// mystatus.textContent = "\u2705"; --> checkmark
-// mystatus.textContent = "\u274C"; --> x mark
-
 // Global variables
-var startButton = document.getElementById('start-button')
-var showIfCorrect = document.querySelector(".show-if-correct");
-var initialSubmit = document.getElementById("initial-submit");
-var randomNum = 0;
-var randomPick;
-var answers = document.querySelector(".answers");
-var score = 0;
-var secondsLeft = 75;
-var timerInterval;
-var showIfCorrect;
-var quizTakers = [];
+var randomNum = 0;  // To store a randomly generated number
+var randomPick;     // To store a randomly chosen question from questions array  
+var score = 0;      // Keeps track of players score
+var secondsLeft = 75;   // Time set for quiz
+var timerInterval;  // to control the timer
+var quizTakers = [];    // to store quiz takers objects
 
 // Initialize quizTakers array with store quizTakers scores and initials
-init();
+initQuizTakers();
 
+// These are the questions to be randomly chosen and displayed
+// TODO: Add 15 questions
 var questions = [
     {   askQuestion: "How many Hawaiian Islands are there total?", 
         answers: [{answer: "137", correct: 1}, {answer: "8", correct: 0}, {answer: "53", correct: 0}, {answer: "94", correct: 0}],
@@ -32,6 +24,7 @@ var questions = [
 ];
 
 // Start the trivia
+var startButton = document.getElementById('start-button')
 startButton.addEventListener("click", function() {
     event.preventDefault();
     document.getElementById("start-display").style.display = "none";
@@ -74,33 +67,23 @@ function generateQuestion() {
 
 // When a question is picked, let the user now whether question is correct 
 // and generate a new questions
+var answers = document.querySelector(".answers");
 answers.addEventListener("click", function(event) {
     event.preventDefault();
    // If there are no more questions, stop quiz
-    
     var element = event.target;
 
     // Check if answer is correct
     var elementIndex =  element.getAttribute("data-index")
 
-    // showIfCorrect = document.querySelector(".show-if-correct");
-    // showIfCorrect.classList.add("border-top");
-
     // Check if answer is correct
     if (randomPick.answers[elementIndex].correct === 1) {
-        // showIfCorrect.textContent = "Correct!";
         showCorrect()
         score += 10;
     } else {
-        // showIfCorrect.textContent = "Incorrect";
         showIncorrect()
         secondsLeft -= 10;
     }
-    
-    // setInterval(function() {
-    //     showIfCorrect.textContent = "";
-    //     showIfCorrect.classList.remove("border-top");
-    // }, 2000);
 
     questions.splice(randomNum, 1);
     if (questions.length === 0) {
@@ -128,6 +111,7 @@ function countDown() {
 }
 
 // Displays "Correct!" if the user gets the right answer
+var showIfCorrect = document.querySelector(".show-if-correct");
 function showCorrect() {
     showIfCorrect = document.querySelector(".show-if-correct");
     showIfCorrect.classList.add("border-top");
@@ -163,6 +147,7 @@ function stopQuiz() {
 }
 
 // Add event listener to initial-submit
+var initialSubmit = document.getElementById("initial-submit");
 initialSubmit.addEventListener("click", function() {
     event.preventDefault();
     var enteredInitials = document.getElementById("enterInitials").value.trim();
@@ -192,7 +177,7 @@ function storeQuizTakers() {
     localStorage.setItem("quizTakers", JSON.stringify(quizTakers))
 }
 
-function init() {
+function initQuizTakers() {
     var storedQuizTakers = JSON.parse(localStorage.getItem("quizTakers"));
     if (storedQuizTakers !== null) {
         for(var i = 0; i < storedQuizTakers.length; i++) {
@@ -209,11 +194,8 @@ function showHighScores() {
     var sortedArray = mergeSort(quizTakers);
     
     // Display results in score board.
-    // Render a new li for each todo
-    // <li class="quiz-taker list-group-item list-group-item-action btn" data-index=0>quiz-taker 1</li>
     for (var i = 0; i < sortedArray.length; i++) {
         var quizTaker = sortedArray[i];
-
         var li = document.createElement("li");
         li.textContent = (i + 1) + ". " + quizTaker.initials + " - " + quizTaker.score;
         li.classList.add("quiz-taker");
@@ -263,3 +245,5 @@ function merge(left, right) {
         .concat(left.slice(leftIndex))
         .concat(right.slice(rightIndex));
 }
+
+// TODO: add functions to go back, clear scores, and play again( will require to reset scores)
