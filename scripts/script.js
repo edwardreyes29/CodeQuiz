@@ -184,6 +184,7 @@ initialSubmit.addEventListener("click", function() {
     };
     quizTakers.push(quizTakerObj);
     storeQuizTakers();
+    showHighScores();
 })
 
 function storeQuizTakers() {
@@ -202,4 +203,53 @@ function init() {
     }   
     // Render todos to the DOM
     // renderQuizTakers();
+}
+
+function showHighScores() {
+    document.getElementById("results-display").style.display = "none";
+    document.getElementById("high-scores-display").style.display = "block";
+
+    // Sort high scores to highest to lowest
+    var sortedArray = mergeSort(quizTakers);
+    sortedArray.forEach(element => console.log(element.score));
+}
+
+// Merge sort:
+// reference: https://medium.com/javascript-in-plain-english/javascript-merge-sort-3205891ac060
+function mergeSort(arr) {
+    // if array only has 1 element, no need to sort
+    if (arr.length <= 1) {
+        return arr;
+    }
+
+    // find the middle
+    const middle = Math.floor(arr.length / 2);
+
+    // divide array into left and right
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
+
+    // use recursion to combine left and right
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+// Merge two arrays: left and right
+function merge(left, right) {
+    let resultArray = [], leftIndex = 0, rightIndex = 0;
+
+    // Concatenate values into the resultArray in order
+    while (leftIndex < left.length && rightIndex < right.length) {
+        if (left[leftIndex].score > right[rightIndex].score) {
+            resultArray.push(left[leftIndex]);
+            leftIndex++; // move left array cursor
+        } else {
+            resultArray.push(right[rightIndex]);
+            rightIndex++; // move right array cursor
+        }
+    }
+
+    // Concat arrays
+    return resultArray
+        .concat(left.slice(leftIndex))
+        .concat(right.slice(rightIndex));
 }
