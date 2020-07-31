@@ -14,8 +14,10 @@ initQuizTakers();
 
 // Display high score
 function showHighest() {
-    sortedArray = mergeSort(quizTakers);
-    document.getElementById("show-highest").textContent = "High Score: " + sortedArray[0].score;
+    if (quizTakers.length > 0) {
+        sortedArray = mergeSort(quizTakers);
+        document.getElementById("show-highest").textContent = "High Score: " + sortedArray[0].score;
+    }
 }
 showHighest();
 
