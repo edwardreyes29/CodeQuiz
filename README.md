@@ -59,6 +59,11 @@ function merge(left, right) {
 ```
 
 
+## LINK TO DEPLOYED APPLICATION
+
+[GitHub Pages](https://edwardreyes29.github.io/CodeQuiz/)
+
+
 The game is ready to play when the use clicks the "Start Quiz" button.
 
 ![Start Page](assets/images/start-page.png)
